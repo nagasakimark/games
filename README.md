@@ -23,3 +23,7 @@ image: images/hop.jpg
 - The card colour is taken from the picture. Add `color: #RRGGBB` to choose it yourself.
 
 Games appear in the same order as the file. The banner, the category buttons and their counts all update on their own.
+
+## Publishing
+
+After editing `games.js`, double-click **`update-site.bat`**. It saves your changes and uploads them to GitHub; the site updates in about a minute.
