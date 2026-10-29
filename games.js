@@ -69,8 +69,8 @@ link: https://nagasakimark.github.io/ukexpress/
 image: images/ukexpress.jpg
 color: #C8102E
 
-name: はまのまち
-english: Hamanomachi
+name: マップクエスト
+english: Map Quest
 type: えいご
 about: えいごで みちあんない しよう！
 learn: みちあんない
