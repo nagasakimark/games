@@ -24,6 +24,10 @@ image: images/hop.jpg
 
 Games appear in the same order as the file. The banner, the category buttons and their counts all update on their own.
 
-## Publishing
+## Syncing (home and work)
 
-After editing `games.js`, double-click **`update-site.bat`**. It saves your changes and uploads them to GitHub; the site updates in about a minute.
+Double-click **`sync-site.bat`** whenever you start or finish editing `games.js`.
+
+- GitHub is newer: it downloads the update.
+- You changed something: it uploads it, and the site updates in about a minute.
+- Both changed: it warns you and lets you choose to merge, keep GitHub's version, or keep yours. Whatever you don't keep is saved in a backup branch first.
