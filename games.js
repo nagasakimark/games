@@ -24,6 +24,15 @@
 
 window.GAMES_TEXT = `
 
+name: シェイプランナー
+english: Shape runner
+type: スピーキング 
+about: スピーキングを練習をしよう。壁に気をつけて！
+learn: えいたんご
+link: https://nagasakimark.github.io/shaperunner/
+image: images/shapes.png
+color: #15AD15
+
 name: タイピングマスター
 english: Typing Master
 type: タイピング
