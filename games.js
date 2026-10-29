@@ -12,7 +12,7 @@
      about:    one short line saying what the game is
      learn:    what students learn (separate several with 、)
      link:     the game's web address                    REQUIRED
-     image:    picture address, or images/your-file.jpg   REQUIRED
+     image:    picture address, or images/your-file.webp   REQUIRED
      new:      yes   (optional: shows a NEW badge)
      color:    #RRGGBB (optional: the colour is normally picked
                from the picture automatically)
@@ -30,7 +30,7 @@ type: スピーキング
 about: スピーキングを練習をしよう。壁に気をつけて！
 learn: えいたんご
 link: https://nagasakimark.github.io/shaperunner/
-image: images/shapes.png
+image: images/shapes.webp
 color: #15AD15
 
 name: タイピングマスター
@@ -39,7 +39,7 @@ type: タイピング
 about: えいごの ことばを タイプしよう！
 learn: キーボード、えいたんご
 link: https://nagasakimark.github.io/type/
-image: images/type.jpg
+image: images/type.webp
 color: #1F3C8F
 
 name: メガネホップ
@@ -48,7 +48,7 @@ type: えいご
 about: 音を きいて、いしを ぴょんぴょん！
 learn: フォニックス
 link: https://nagasakimark.github.io/hop/
-image: images/hop.jpg
+image: images/hop.webp
 color: #0E95B3
 
 name: ウィッチズ・スープ
@@ -57,7 +57,7 @@ type: えいご
 about: まほうの スープを つくろう！
 learn: ざいりょうの えいご
 link: https://nagasakimark.github.io/witchsoup/
-image: images/witchsoup.jpg
+image: images/witchsoup.webp
 color: #D63D82
 
 name: UKエクスプレス
@@ -66,7 +66,7 @@ type: せかい
 about: 電車で イギリスを 旅しよう！
 learn: イギリスの 町、ぶんか
 link: https://nagasakimark.github.io/ukexpress/
-image: images/ukexpress.jpg
+image: images/ukexpress.webp
 color: #C8102E
 
 name: マップクエスト
@@ -75,7 +75,7 @@ type: えいご
 about: えいごで みちあんない しよう！
 learn: みちあんない
 link: https://nagasakimark.github.io/hamanomachi3/
-image: images/hamanomachi.jpg
+image: images/hamanomachi.webp
 color: #2E9A44
 
 name: トマチシェフ
@@ -84,7 +84,7 @@ type: えいご
 about: ちゅうもんの りょうりを つくろう！
 learn: たべものの えいご
 link: https://nagasakimark.github.io/chef/
-image: images/chef.jpg
+image: images/chef.webp
 color: #E2531A
 
 name: ジャパンゲッサー
@@ -93,7 +93,7 @@ type: せかい
 about: ここは 日本の どこかな？
 learn: 日本の ちり
 link: https://nagasakimark.github.io/japanguesser/
-image: images/japanguesser.jpg
+image: images/japanguesser.webp
 color: #2B76D6
 
 name: グローブゲッサー
@@ -102,7 +102,47 @@ type: せかい
 about: ここは 世界の どこかな？
 learn: 世界の 国
 link: https://nagasakimark.github.io/globeguesser/
-image: images/globeguesser.jpg
+image: images/globeguesser.webp
 color: #0C7F8A
+
+name: ミールディール
+english: Meal Deal Maker
+type: せかい
+about: じぶんだけの ミールディールを つくろう！
+learn: イギリスの ぶんか、おかね
+link: https://nagasakimark.github.io/mealdeal/
+image: images/mealdeal.webp
+color: #1F55C4
+new: yes
+
+name: カントリーファクツ
+english: Country Facts
+type: せかい
+about: せかいの くにを 日本と くらべよう！
+learn: 世界の 国、くらべかた
+link: https://nagasakimark.github.io/countryfacts/
+image: images/countryfacts.webp
+color: #1675C0
+new: yes
+
+name: ワードル
+english: Wordle
+type: えいご
+about: 教科書の 5もじの たんごを あてよう！
+learn: たんごの つづり
+link: https://nagasakimark.github.io/wordle/
+image: images/wordle.webp
+color: #2F7D3A
+new: yes
+
+name: テスコードル
+english: Tescodle
+type: せかい
+about: スーパーの ねだんを あてよう！
+learn: イギリスの おかね、すうじ
+link: https://nagasakimark.github.io/tescodle/
+image: images/tescodle.webp
+color: #D81920
+new: yes
 
 `;

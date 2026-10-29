@@ -13,11 +13,11 @@ type: えいご
 about: 音を きいて、いしを ぴょんぴょん！
 learn: フォニックス
 link: https://nagasakimark.github.io/hop/
-image: images/hop.jpg
+image: images/hop.webp
 ```
 
 - `name`, `link` and `image` are required; everything else is optional.
-- `image` can be a full web address or a file you put in `images/`. Any shape works.
+- `image` can be a full web address or a file you put in `images/`. Any shape works. Small WebP files load fastest (squoosh.app converts a picture in a few clicks).
 - `type`: えいご, せかい or タイピング. Write a new word and a new category button appears.
 - `new: yes` puts a NEW! badge on the game.
 - The card colour is taken from the picture. Add `color: #RRGGBB` to choose it yourself.
