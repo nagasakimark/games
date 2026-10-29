@@ -113,7 +113,6 @@ learn: イギリスの ぶんか、おかね
 link: https://nagasakimark.github.io/mealdeal/
 image: images/mealdeal.webp
 color: #1F55C4
-new: yes
 
 name: カントリーファクツ
 english: Country Facts
@@ -123,7 +122,6 @@ learn: 世界の 国、くらべかた
 link: https://nagasakimark.github.io/countryfacts/
 image: images/countryfacts.webp
 color: #1675C0
-new: yes
 
 name: ワードル
 english: Wordle
@@ -133,7 +131,6 @@ learn: たんごの つづり
 link: https://nagasakimark.github.io/wordle/
 image: images/wordle.webp
 color: #2F7D3A
-new: yes
 
 name: テスコードル
 english: Tescodle
@@ -143,6 +140,5 @@ learn: イギリスの おかね、すうじ
 link: https://nagasakimark.github.io/tescodle/
 image: images/tescodle.webp
 color: #D81920
-new: yes
 
 `;
