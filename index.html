@@ -32,7 +32,16 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0}
-  body{font-family:var(--font);font-weight:700;color:var(--ink);background:var(--sky);-webkit-font-smoothing:antialiased}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font);font-weight:700;color:var(--ink);-webkit-font-smoothing:antialiased;
+    background-color:var(--sky);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(36,87,230,.10) 1.5px, transparent 2px);
+    background-size:26px 26px;
+  }
+  ::selection{background:var(--yellow);color:var(--ink)}
+  .games{scroll-margin-top:16px}
   img{display:block}
   a{color:inherit;text-decoration:none}
   button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
@@ -170,7 +179,8 @@
   .card h3{margin:0;font-size:19px;font-weight:900;line-height:1.3}
   .card .en{font-size:13px;font-weight:800;color:var(--ink-2);opacity:.75;margin-top:2px}
   .card p{margin:8px 0 12px;font-size:15px;font-weight:700;line-height:1.5;color:var(--ink-2)}
-  .card .meta{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:800;color:var(--ink-2);background:#F1F6FD;border-radius:12px;padding:7px 10px}
+  .card .meta{margin-top:auto;display:flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap;font-weight:800;color:var(--ink-2);background:#F1F6FD;border-radius:12px;padding:7px 8px}
+  .card .meta .jp{min-width:0;white-space:normal;line-height:1.3}
   .card .meta .lb{flex:none;background:var(--c);color:#fff;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:900}
   .tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 10px 3px 7px;font-size:12.5px;font-weight:900;background:var(--tc);color:#fff}
   .tag svg{width:14px;height:14px}
@@ -185,8 +195,106 @@
   .foot p{margin:0;font-size:16px;font-weight:800}
   .foot small{margin-left:auto;font-size:13px;font-weight:700;opacity:.75}
 
+  /* ================= Polish ================= */
+  .jp, .hero-title, .card h3{text-wrap:balance}
+  .card p.jp{text-wrap:pretty}
+
+  /* header: twinkling stars + current-category marker */
+  .site-header{overflow:visible}
+  .site-header .sparks{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+  .spark{position:absolute;width:14px;height:14px;fill:#FFC928;opacity:.0;animation:twinkle 4.6s ease-in-out infinite}
+  .spark.s1{left:36%;top:16px}
+  .spark.s2{left:52%;top:46px;width:10px;height:10px;animation-delay:1.4s}
+  .spark.s3{left:61%;top:14px;width:9px;height:9px;fill:#fff;animation-delay:2.6s}
+  .spark.s4{left:29%;top:50px;width:9px;height:9px;fill:#fff;animation-delay:3.4s}
+  @keyframes twinkle{0%,100%{opacity:0;transform:scale(.4) rotate(0)}50%{opacity:.9;transform:scale(1) rotate(25deg)}}
+  .site-header .container{position:relative}
+  .nav a{position:relative}
+  .nav a.on::after{content:"";position:absolute;left:18px;right:18px;bottom:-3px;height:4px;border-radius:4px;background:var(--yellow)}
+
+  /* hero: content swaps in, autoplay progress, soft drifting circles */
+  .hero-info .deco{animation:drift 14s ease-in-out infinite alternate}
+  .hero-info .deco.two{animation-duration:18s}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-18px,14px) scale(1.12)}}
+  .hero-info.swap > :not(.deco){animation:rise .5s cubic-bezier(.2,.8,.3,1) backwards}
+  .hero-info.swap > .hero-title{animation-delay:.05s}
+  .hero-info.swap > .hero-en{animation-delay:.09s}
+  .hero-info.swap > .hero-desc{animation-delay:.13s}
+  .hero-info.swap > .hero-learn{animation-delay:.18s}
+  .hero-info.swap > .play-btn{animation-delay:.23s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .hero-frame{touch-action:pan-y}
+  .dots button{position:relative;overflow:hidden}
+  .dots button[aria-selected="true"]{background:#A9C8F2}
+  .dots button::after{content:"";position:absolute;inset:0;background:var(--blue);border-radius:inherit;transform-origin:left;transform:scaleX(0)}
+  .dots button[aria-selected="true"]::after{transform:scaleX(1);animation:fill 6s linear backwards}
+  .hero.paused .dots button[aria-selected="true"]::after{animation-play-state:paused}
+  @keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .dots button:hover{background:#7FA9EA}
+  /* play button: a gentle ring that invites a tap */
+  .play-btn::before{content:"";position:absolute;inset:0;border-radius:inherit;border:3px solid rgba(255,255,255,.7);animation:ring 2.6s ease-out infinite;pointer-events:none}
+  .play-btn:hover::before{animation:none;opacity:0}
+  @keyframes ring{0%{transform:scale(1);opacity:.85}70%,100%{transform:scale(1.22,1.45);opacity:0}}
+  .play-btn.wiggle{animation:wiggle .7s}
+  @keyframes wiggle{20%{transform:rotate(-4deg) scale(1.06)}45%{transform:rotate(3deg) scale(1.06)}70%{transform:rotate(-2deg)}100%{transform:none}}
+
+  /* bubbles */
+  .bubble:active .circle{transform:scale(.93)}
+  .bubble .bl{transition:color .15s}
+  .bubble[aria-pressed="true"] .circle{animation:pop .4s cubic-bezier(.3,1.6,.5,1)}
+  @keyframes pop{0%{transform:scale(.88)}100%{transform:scale(1)}}
+
+  /* section head: count + surprise button */
+  .games-head{align-items:center;gap:14px}
+  .count-pill{margin-left:10px;background:#fff;color:var(--blue);border-radius:999px;padding:3px 13px;font-size:15px;font-weight:900;box-shadow:0 2px 6px rgba(28,62,140,.12);vertical-align:middle}
+  .btn-random{
+    margin-left:auto;display:inline-flex;align-items:center;gap:8px;
+    background:#fff;color:var(--blue);border-radius:999px;padding:8px 18px 8px 10px;
+    font-size:16px;font-weight:900;box-shadow:0 4px 0 #BBD3F5;
+    transition:transform .12s, box-shadow .12s, background .15s;
+  }
+  .btn-random svg{width:30px;height:30px;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+  .btn-random:hover{background:#F4F9FF;transform:translateY(-2px);box-shadow:0 6px 0 #BBD3F5}
+  .btn-random:hover svg{transform:rotate(180deg)}
+  .btn-random:active{transform:translateY(3px);box-shadow:0 1px 0 #BBD3F5}
+
+  /* cards: entrance, press, image fade-in, always-visible play on touch */
+  .card{animation:cardIn .55s cubic-bezier(.2,.8,.3,1) backwards;animation-delay:calc(var(--n,0) * 55ms)}
+  @keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+  .card:active{transform:translateY(-2px) scale(.985)}
+  .thumb img{opacity:0;transition:opacity .4s, transform .35s}
+  .thumb img.ld{opacity:1}
+  .thumb.err{display:grid;place-items:center;text-align:center;color:#fff;font-size:20px;font-weight:900;padding:12px}
+  .card p{min-height:3em}
+  .card-body{transition:border-color .2s}
+  .card:hover h3{color:var(--tc2,var(--ink))}
+  .card .cat{letter-spacing:.02em}
+  .empty{display:none;text-align:center;padding:40px 0;font-size:18px;color:var(--ink-2)}
+  @media (hover:none){
+    .thumb .hover-play{left:auto;top:auto;right:10px;bottom:10px;margin:0;width:46px;height:46px;transform:none;opacity:1;box-shadow:0 3px 0 var(--orange-dark)}
+    .thumb .hover-play svg{width:18px;height:18px;margin-left:3px}
+  }
+
+  /* back to top */
+  .to-top{
+    position:fixed;right:18px;bottom:18px;z-index:5;width:52px;height:52px;border-radius:50%;
+    background:var(--orange);color:#fff;display:grid;place-items:center;
+    box-shadow:0 4px 0 var(--orange-dark), 0 8px 18px rgba(28,62,140,.25);
+    opacity:0;transform:translateY(16px) scale(.8);pointer-events:none;
+    transition:opacity .25s, transform .3s cubic-bezier(.3,1.6,.5,1);
+  }
+  .to-top.show{opacity:1;transform:none;pointer-events:auto}
+  .to-top:hover{background:#FF8A33}
+  .to-top:active{transform:translateY(3px)}
+  .to-top svg{width:24px;height:24px}
+
+  /* footer: a little rhythm */
+  .foot p{flex:1;min-width:200px}
+  .foot .logo-mark{animation:bob 3.2s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-4px) rotate(-6deg)}}
+
   /* ================= Responsive ================= */
-  @media (max-width:1060px){
+  @media (max-width:1150px){
     .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
     .hero-title{font-size:32px}
   }
@@ -207,7 +315,11 @@
     .hero-info{padding:22px 20px 24px}
     .hero-title{font-size:28px}
     .hero-desc{font-size:17px}
-    .arrow{width:42px;height:42px;margin-top:-21px}
+    .arrow{width:38px;height:38px;margin-top:-19px}
+    .arrow svg{width:18px;height:18px}
+    .btn-random span{display:none}
+    .btn-random{padding:6px}
+    .to-top{right:12px;bottom:12px;width:46px;height:46px}
     .pick{flex-direction:column;align-items:flex-start;gap:16px;padding:18px 14px}
     .bubbles{gap:6px;justify-content:space-between;width:100%}
     .bubble{width:76px}
@@ -245,6 +357,12 @@
       <path d="M28 23.5v15a1.3 1.3 0 0 0 2 1.1l11.5-7.5a1.3 1.3 0 0 0 0-2.2L30 22.4a1.3 1.3 0 0 0-2 1.1z" fill="#FF7A1A"/>
       <path d="M52 6l1.8 4.4 4.4 1.8-4.4 1.8L52 18.4l-1.8-4.4-4.4-1.8 4.4-1.8z" fill="#FFC928"/>
     </symbol>
+    <symbol id="star" viewBox="0 0 24 24"><path d="M12 0l3 8.2L24 12l-9 3.8L12 24l-3-8.2L0 12l9-3.8z"/></symbol>
+    <symbol id="ic-dice" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="16" fill="#FFC928"/>
+      <rect x="6.5" y="6.5" width="19" height="19" rx="5" fill="#fff"/>
+      <g fill="#2457E6"><circle cx="12" cy="12" r="1.9"/><circle cx="20" cy="12" r="1.9"/><circle cx="16" cy="16" r="1.9"/><circle cx="12" cy="20" r="1.9"/><circle cx="20" cy="20" r="1.9"/></g>
+    </symbol>
     <symbol id="ic-play" viewBox="0 0 24 24"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z"/></symbol>
     <!-- category pictures: filled, two-tone -->
     <symbol id="ic-all" viewBox="0 0 48 48">
@@ -271,6 +389,12 @@
 </svg>
 
 <header class="site-header">
+  <div class="sparks" aria-hidden="true">
+    <svg class="spark s1" viewBox="0 0 24 24"><use href="#star"/></svg>
+    <svg class="spark s2" viewBox="0 0 24 24"><use href="#star"/></svg>
+    <svg class="spark s3" viewBox="0 0 24 24"><use href="#star"/></svg>
+    <svg class="spark s4" viewBox="0 0 24 24"><use href="#star"/></svg>
+  </div>
   <div class="container">
     <a class="logo" href="./" aria-label="えいごゲームひろば ホーム">
       <svg class="logo-mark" aria-hidden="true"><use href="#logo"/></svg>
@@ -306,10 +430,16 @@
   </section>
 
   <section class="games" id="games" aria-labelledby="gamesTitle">
-    <div class="games-head"><h2 class="section-title" id="gamesTitle">ぜんぶの ゲーム</h2></div>
+    <div class="games-head">
+      <h2 class="section-title"><span id="gamesTitle">ぜんぶの ゲーム</span><span class="count-pill" id="gamesCount"></span></h2>
+      <button class="btn-random" id="random" type="button" aria-label="おまかせ：ゲームを ひとつ えらぶ"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-dice"/></svg><span>おまかせ！</span></button>
+    </div>
     <div class="grid" id="grid"></div>
+    <p class="empty" id="empty">ゲームが まだ ありません</p>
   </section>
 </main>
+
+<button class="to-top" id="toTop" type="button" aria-label="うえに もどる"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15l7-7 7 7"/></svg></button>
 
 <footer>
   <svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C240 2 480 2 720 18s480 18 720-2v24z" fill="#16349A"/></svg>
@@ -424,7 +554,7 @@
   $("grid").innerHTML = GAMES.map((g, i) => {
     const c = CATS[g.cat];
     return `
-    <a class="card" href="${esc(g.url)}" data-cat="${esc(g.cat)}" data-i="${i}" style="--c:${g.color}">
+    <a class="card" href="${esc(g.url)}" data-cat="${esc(g.cat)}" data-i="${i}" style="--c:${g.color};--n:${i}" aria-label="${esc(g.ja)}${g.en ? "（" + esc(g.en) + "）" : ""}">
       <div class="thumb"><img src="${esc(g.img)}" alt="" loading="lazy" width="760" height="400"><span class="hover-play">${PLAY}</span>${g.isNew ? '<span class="new-badge">NEW!</span>' : ""}</div>
       <div class="card-body">
         <div class="cat" style="--tc:${c.color}">${use(c.custom ? "ic2-all" : c.icon.replace("ic-","ic2-"))}${esc(c.label)}</div>
@@ -435,11 +565,29 @@
       </div>
     </a>`;}).join("");
 
-  function filter(id){
+  /* pictures fade in when ready; a broken picture falls back to a coloured tile with the name */
+  document.querySelectorAll(".thumb img").forEach(im => {
+    const ok = () => im.classList.add("ld");
+    const bad = () => { const t = im.parentElement; t.classList.add("err"); im.remove(); t.insertBefore(document.createTextNode(GAMES[+t.closest(".card").dataset.i].ja), t.firstChild); };
+    if (im.complete) (im.naturalWidth ? ok() : bad()); else { im.onload = ok; im.onerror = bad; }
+  });
+
+  function filter(id, replay = true){
     document.querySelectorAll(".bubble").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === id));
-    document.querySelectorAll(".card").forEach(c => c.hidden = !(id === "all" || c.dataset.cat === id));
+    document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("on", id !== "all" && a.dataset.f === id));
+    let n = 0;
+    document.querySelectorAll(".card").forEach(c => {
+      c.hidden = !(id === "all" || c.dataset.cat === id);
+      if (!c.hidden) {
+        c.style.setProperty("--n", n++);
+        if (replay) { c.style.animation = "none"; void c.offsetWidth; c.style.animation = ""; }
+      }
+    });
     const f = FILTERS.find(x => x.id === id);
     $("gamesTitle").textContent = id === "all" ? "ぜんぶの ゲーム" : `${f.label}の ゲーム`;
+    $("gamesCount").textContent = `${n}こ`;
+    $("empty").style.display = n ? "none" : "block";
+    $("random").hidden = n === 0;
   }
   function applyColour(i, col){
     GAMES[i].color = col;
@@ -449,7 +597,7 @@
   }
   $("bubbles").addEventListener("click", e => { const b = e.target.closest(".bubble"); if (b) filter(b.dataset.f); });
   $("nav").addEventListener("click", e => { const a = e.target.closest("a"); if (a) filter(a.dataset.f); });
-  filter("all");
+  filter("all", false);
 
   /* ---------- Hero carousel ---------- */
   const art = $("heroArt"), frame = $("heroFrame");
@@ -472,17 +620,54 @@
     $("heroDesc").textContent = g.desc;
     $("heroLearn").innerHTML = g.learn.length ? `<span class="lbl">まなべること</span>` + g.learn.map(l => `<span class="chip">${esc(l)}</span>`).join("") : "";
     $("heroPlay").href = art.href = g.url;
+    if (swapReady) { const info = document.querySelector(".hero-info"); info.classList.remove("swap"); void info.offsetWidth; info.classList.add("swap"); }
+    swapReady = true;
     restart();
   }
-  function restart(){ clearInterval(timer); if (!reduce) timer = setInterval(() => show(cur + 1), 6000); }
+  let swapReady = false;
+  const hero = document.querySelector(".hero");
+  function restart(){
+    clearInterval(timer);
+    hero.classList.remove("paused");
+    if (!reduce) timer = setInterval(() => show(cur + 1), 6000);
+  }
+  function hold(){ clearInterval(timer); hero.classList.add("paused"); }
   $("prev").onclick = () => show(cur - 1);
   $("next").onclick = () => show(cur + 1);
   $("dots").addEventListener("click", e => { const d = e.target.closest("button"); if (d) show(+d.dataset.i); });
-  const hero = document.querySelector(".hero");
-  hero.addEventListener("mouseenter", () => clearInterval(timer));
+  hero.addEventListener("mouseenter", hold);
   hero.addEventListener("mouseleave", restart);
-  hero.addEventListener("focusin", () => clearInterval(timer));
+  hero.addEventListener("focusin", hold);
+  hero.addEventListener("focusout", restart);
+  /* swipe on touch screens */
+  let sx = null, sy = 0;
+  frame.addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive:true });
+  frame.addEventListener("touchend", e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(cur + (dx < 0 ? 1 : -1));
+  }, { passive:true });
+  /* arrow keys */
+  addEventListener("keydown", e => {
+    if (e.target.closest("input,textarea,select") || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key === "ArrowLeft") show(cur - 1); else if (e.key === "ArrowRight") show(cur + 1);
+  });
   show(0);
+
+  /* ---------- おまかせ: jump to a surprise game ---------- */
+  $("random").addEventListener("click", () => {
+    const pool = [...document.querySelectorAll(".card:not([hidden])")].map(c => +c.dataset.i).filter(i => i !== cur);
+    if (!pool.length) return;
+    show(pool[Math.floor(Math.random() * pool.length)]);
+    scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    const p = $("heroPlay"); p.classList.remove("wiggle"); void p.offsetWidth; p.classList.add("wiggle");
+  });
+
+  /* ---------- back to top ---------- */
+  const toTop = $("toTop");
+  const onScroll = () => toTop.classList.toggle("show", scrollY > 520);
+  addEventListener("scroll", onScroll, { passive:true }); onScroll();
+  toTop.addEventListener("click", () => scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }));
 
   /* colours for games that did not set one */
   GAMES.forEach((g, i) => { if (g.auto) colourFromImage(g.img, col => { if (col) applyColour(i, col); }); });
