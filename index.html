@@ -3,310 +3,432 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>マーク先生のゲームセンター</title>
-<meta name="description" content="すきな ゲームを えらんで、えいごで あそぼう！ マーク先生の えいごゲーム。">
-<meta name="theme-color" content="#FFD23F">
+<title>えいごゲームひろば | Mark Sensei</title>
+<meta name="description" content="えいごを たのしく まなべる ゲームが いっぱい！">
+<meta name="theme-color" content="#2457E6">
 <link rel="icon" href="images/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* ground, ink, paper */
-    --ground:#FFD23F;
-    --ink:#142850;
-    --paper:#FFFFFF;
-
-    --display:"Dela Gothic One","Hiragino Kaku Gothic StdN","Meiryo",sans-serif;
-    --text:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Meiryo",sans-serif;
-
-    --m:16px;          /* outer margin */
-    --gap:10px;        /* board gap */
-    --r:22px;          /* tile radius, used everywhere */
-    --art:2;           /* art aspect (width / height) */
-    --ease:cubic-bezier(.2,.8,.2,1);
+    --blue:#2457E6;
+    --blue-dark:#1A43BC;
+    --blue-deep:#16349A;
+    --sky:#E4F3FF;
+    --sky-2:#CFE9FF;
+    --orange:#FF7A1A;
+    --orange-dark:#D95E00;
+    --yellow:#FFC928;
+    --green:#22B35E;
+    --pink:#F2478E;
+    --teal:#13A8C2;
+    --ink:#1C2A4E;
+    --ink-2:#4B5A7C;
+    --white:#fff;
+    --card-shadow:0 6px 18px rgba(28,62,140,.13);
+    --card-shadow-hover:0 14px 30px rgba(28,62,140,.22);
+    --font:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Meiryo",sans-serif;
   }
   *{box-sizing:border-box}
   html,body{margin:0}
-  body{
-    background:var(--ground);
-    color:var(--ink);
-    font-family:var(--text);
-    font-weight:700;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:inherit}
+  body{font-family:var(--font);font-weight:700;color:var(--ink);background:var(--sky);-webkit-font-smoothing:antialiased}
   img{display:block}
-  :focus-visible{outline:4px solid var(--ink);outline-offset:3px}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+  :focus-visible{outline:4px solid var(--yellow);outline-offset:3px;border-radius:12px}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px}
+  .jp{word-break:keep-all;overflow-wrap:anywhere}
 
-  .wrap{max-width:1520px;margin:0 auto;padding:0 var(--m)}
+  /* ================= Header ================= */
+  .site-header{background:var(--blue);position:relative;z-index:3}
+  .site-header .container{display:flex;align-items:center;height:82px;gap:20px}
+  .logo{display:flex;align-items:center;gap:12px;color:#fff}
+  .logo-mark{width:60px;height:60px;flex:none;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+  .logo:hover .logo-mark{transform:rotate(-10deg) scale(1.08)}
+  .logo-text{line-height:1}
+  .logo-text small{display:block;font-size:12.5px;font-weight:800;letter-spacing:.08em;color:var(--yellow)}
+  .logo-text strong{display:block;font-size:29px;font-weight:900;letter-spacing:.02em;margin-top:3px}
+  .nav{margin-left:auto;display:flex;gap:6px}
+  .nav a{
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:6px 14px;border-radius:14px;color:#fff;font-size:14px;font-weight:800;
+    transition:background .15s;
+  }
+  .nav a:hover{background:rgba(255,255,255,.14)}
+  .nav .ni{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+  .nav a:hover .ni{transform:translateY(-2px) scale(1.08)}
+  .nav .ni svg{width:20px;height:20px}
+  /* curved bottom edge */
+  .header-curve{display:block;width:100%;height:28px;margin-top:-1px}
 
-  /* ---------- Top bar ---------- */
-  .top{display:flex;align-items:center;gap:24px;padding:20px 0 18px}
-  .title h1{
-    margin:0;
-    font-family:var(--display);font-weight:400;
-    font-size:clamp(28px,3.3vw,50px);
-    line-height:1;letter-spacing:-.015em;
+  /* ================= Hero carousel ================= */
+  .hero{margin-top:6px;position:relative}
+  .hero-frame{
+    position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+    border-radius:26px;overflow:hidden;background:var(--hc,#2457E6);
+    box-shadow:0 10px 28px rgba(28,62,140,.22);
+    transition:background-color .5s;
+    min-height:340px;
   }
-  .title p{margin:8px 0 0;font-size:18px;font-weight:900}
-  .pick{
-    margin-left:auto;flex:none;
-    display:inline-flex;align-items:center;gap:12px;
-    font-family:var(--display);font-weight:400;font-size:19px;
-    color:var(--paper);background:var(--ink);
-    border:0;border-radius:999px;
-    padding:12px 24px 12px 14px;
-    cursor:pointer;
-    transition:transform .15s var(--ease);
+  .hero-art{position:relative;display:block;overflow:hidden;background:#cfe0f2}
+  .hero-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.03);transition:opacity .55s, transform 6s ease-out}
+  .hero-art img.on{opacity:1;transform:scale(1)}
+  .hero-info{
+    position:relative;color:#fff;padding:32px 34px 30px;
+    display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
   }
-  /* the dial is a small picture of the roulette: one flat slice per game colour */
-  .pick .dial{
-    width:30px;height:30px;border-radius:50%;flex:none;
-    background:conic-gradient(#C8102E 0 45deg,#E85D10 0 90deg,#FFD23F 0 135deg,#3E9431 0 180deg,#0F95B5 0 225deg,#2F7FE0 0 270deg,#1B2F6B 0 315deg,#D63D82 0);
-    border:3px solid var(--paper);
-    transition:transform .4s var(--ease);
+  .hero-info .deco{position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.08)}
+  .hero-info .deco.two{right:auto;left:-40px;top:auto;bottom:-90px;width:200px;height:200px;background:rgba(255,255,255,.06)}
+  .hero-cat{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);border-radius:999px;padding:5px 13px 5px 8px;font-size:14px;font-weight:800;position:relative}
+  .hero-cat svg{width:18px;height:18px}
+  .hero-title{margin:12px 0 0;font-size:40px;font-weight:900;line-height:1.15;position:relative}
+  .hero-en{font-size:17px;font-weight:800;opacity:.8;margin-top:4px;position:relative}
+  .hero-desc{margin:14px 0 0;font-size:19px;font-weight:800;line-height:1.5;position:relative}
+  .hero-learn{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:12px;position:relative}
+  .hero-learn .lbl{font-size:13.5px;font-weight:800;opacity:.85;margin-right:2px}
+  .hero-learn .chip{background:#fff;color:var(--ink);border-radius:999px;padding:4px 12px;font-size:14px;font-weight:800}
+  .play-btn{
+    position:relative;margin-top:22px;
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--orange);color:#fff;
+    border-radius:999px;padding:12px 30px 12px 14px;
+    font-size:23px;font-weight:900;letter-spacing:.08em;
+    box-shadow:0 5px 0 var(--orange-dark);
+    transition:transform .12s, box-shadow .12s, background .15s;
   }
-  .pick:hover{transform:translateY(-2px)}
-  .pick:hover .dial{transform:rotate(90deg)}
-  .pick:active{transform:translateY(1px) scale(.98)}
-  .pick[aria-busy="true"] .dial{animation:turn .5s linear infinite}
-  @keyframes turn{to{transform:rotate(360deg)}}
-  .js-off .pick{display:none}
+  .play-btn .pi{width:38px;height:38px;border-radius:50%;background:#fff;display:grid;place-items:center}
+  .play-btn .pi svg{width:16px;height:16px;fill:var(--orange);margin-left:3px}
+  .play-btn:hover{background:#FF8A33;transform:translateY(-2px);box-shadow:0 7px 0 var(--orange-dark)}
+  .play-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--orange-dark)}
 
-  /* ---------- Board ---------- */
-  .board{
-    list-style:none;margin:0;padding:0;
-    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:var(--gap);
+  .arrow{
+    position:absolute;top:50%;z-index:2;width:52px;height:52px;margin-top:-26px;border-radius:50%;
+    background:#fff;color:var(--blue);display:grid;place-items:center;
+    box-shadow:0 4px 12px rgba(28,62,140,.25);
+    transition:transform .15s;
   }
-  .tile{position:relative}
-  .tile a{
-    display:flex;flex-direction:column;height:100%;
-    text-decoration:none;color:var(--paper);
-    background:var(--c);
-    border-radius:var(--r);
-    overflow:hidden;
-    transition:transform .18s var(--ease);
-  }
-  .art{position:relative;aspect-ratio:var(--art);overflow:hidden;background:var(--c)}
-  .art img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
-  .bar{flex:1;display:flex;align-items:center;gap:12px;padding:12px 14px 14px 18px}
-  .bar .words{flex:1;min-width:0}
-  .bar h2{
-    margin:0;font-family:var(--display);font-weight:400;
-    font-size:23px;line-height:1.1;letter-spacing:-.01em;
-  }
-  .bar .what{margin:5px 0 0;font-size:15.5px;font-weight:900;line-height:1.35}
-  .bar .learn{margin:2px 0 0;font-size:14px;font-weight:700;line-height:1.35}
-  .bar .learn b{font-weight:900}
-  .what,.learn,.bar h2,.jp,.title p{word-break:keep-all;overflow-wrap:anywhere}
-  .play{
-    flex:none;width:52px;height:52px;border-radius:50%;
-    background:var(--paper);color:var(--c);
-    display:grid;place-items:center;
-    transition:transform .2s var(--ease);
-  }
-  .play svg{width:20px;height:20px;margin-left:4px;fill:currentColor}
-  .tile a:hover{transform:translateY(-4px)}
-  .tile a:hover .art img{transform:scale(1.05)}
-  .tile a:hover .play{transform:scale(1.12)}
-  .tile a:active{transform:translateY(1px)}
+  .arrow svg{width:22px;height:22px}
+  .arrow:hover{transform:scale(1.1)}
+  .arrow.prev{left:-20px}
+  .arrow.next{right:-20px}
+  .dots{display:flex;justify-content:center;gap:8px;margin-top:14px}
+  .dots button{width:12px;height:12px;border-radius:999px;background:#A9C8F2;transition:width .25s, background .25s}
+  .dots button[aria-selected="true"]{width:34px;background:var(--blue)}
 
-  /* Roulette states */
-  .board.spinning .tile a,.board.landed .tile a{transition:transform .12s var(--ease), opacity .2s, filter .2s}
-  .board.spinning .tile:not(.lit) a,.board.landed .tile:not(.won) a{filter:grayscale(1) brightness(.8) contrast(.9)}
-  .tile.lit a,.tile.won a{transform:scale(1.03);outline:6px solid var(--paper);outline-offset:0}
-  .flag{
-    position:absolute;left:14px;top:14px;z-index:2;
-    background:var(--paper);color:var(--ink);
-    font-family:var(--display);font-size:20px;
-    border-radius:999px;padding:8px 18px;
-    opacity:0;transform:translateY(8px) scale(.9);pointer-events:none;
-    transition:opacity .25s var(--ease), transform .35s var(--ease);
+  /* ================= Category bubbles ================= */
+  .section-title{display:flex;align-items:center;gap:10px;margin:0;font-size:26px;font-weight:900}
+  .section-title .st-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--yellow)}
+  .section-title .st-ic svg{width:24px;height:24px}
+  .pick{margin-top:34px;background:#fff;border-radius:26px;padding:22px 28px 24px;box-shadow:var(--card-shadow);display:flex;align-items:center;gap:32px}
+  .pick .section-title{flex:none}
+  .bubbles{display:flex;flex:1;justify-content:space-around;gap:16px;flex-wrap:wrap}
+  .bubble{display:flex;flex-direction:column;align-items:center;gap:8px;width:120px}
+  .bubble .circle{
+    width:96px;height:96px;border-radius:50%;background:var(--bc);
+    display:grid;place-items:center;position:relative;
+    box-shadow:0 6px 0 rgba(0,0,0,.12);
+    transition:transform .2s cubic-bezier(.3,1.6,.5,1), box-shadow .2s;
   }
-  .tile.won .flag{opacity:1;transform:none}
+  .bubble .circle svg{width:50px;height:50px}
+  .bubble .count{position:absolute;top:-4px;right:-4px;min-width:30px;height:30px;padding:0 8px;border-radius:999px;background:#fff;color:var(--bc);font-size:15px;font-weight:900;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+  .bubble .bl{font-size:15px;font-weight:900;text-align:center;line-height:1.3}
+  .bubble:hover .circle{transform:translateY(-4px) scale(1.05)}
+  .bubble[aria-pressed="true"] .circle{box-shadow:0 0 0 5px #fff, 0 0 0 9px var(--bc)}
+  .bubble[aria-pressed="true"] .bl{color:var(--bc)}
 
-  /* Entrance: one orchestrated moment (content shows without script) */
-  .enter .tile{opacity:0;transform:translateY(24px)}
-  .enter.go .tile{opacity:1;transform:none;transition:opacity .5s var(--ease), transform .6s var(--ease);transition-delay:calc(var(--i) * 70ms)}
+  /* ================= Game cards ================= */
+  .games{margin-top:38px}
+  .games-head{display:flex;align-items:baseline;justify-content:space-between}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:18px}
+  .card{
+    position:relative;display:flex;flex-direction:column;
+    background:#fff;border-radius:20px;overflow:hidden;
+    box-shadow:var(--card-shadow);
+    transition:transform .2s cubic-bezier(.3,1.4,.5,1), box-shadow .2s;
+  }
+  .card[hidden]{display:none}
+  .card:hover{transform:translateY(-6px);box-shadow:var(--card-shadow-hover)}
+  .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--c)}
+  .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+  .thumb::after{content:"";position:absolute;inset:0;background:rgba(20,30,70,0);transition:background .2s}
+  .card:hover .thumb img{transform:scale(1.06)}
+  .card:hover .thumb::after{background:rgba(20,30,70,.25)}
+  .thumb .hover-play{
+    position:absolute;left:50%;top:50%;z-index:1;width:64px;height:64px;margin:-32px 0 0 -32px;
+    border-radius:50%;background:var(--orange);display:grid;place-items:center;
+    box-shadow:0 4px 0 var(--orange-dark);
+    transform:scale(.4);opacity:0;transition:transform .25s cubic-bezier(.3,1.6,.5,1), opacity .15s;
+  }
+  .thumb .hover-play svg{width:24px;height:24px;fill:#fff;margin-left:4px}
+  .card:hover .hover-play,.card:focus-visible .hover-play{transform:scale(1);opacity:1}
+  .card-body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;border-top:5px solid var(--c)}
+  .card .cat{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:900;color:var(--tc);margin-bottom:3px}
+  .card .cat svg{width:16px;height:16px}
+  .card h3{margin:0;font-size:19px;font-weight:900;line-height:1.3}
+  .card .en{font-size:13px;font-weight:800;color:var(--ink-2);opacity:.75;margin-top:2px}
+  .card p{margin:8px 0 12px;font-size:15px;font-weight:700;line-height:1.5;color:var(--ink-2)}
+  .card .meta{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:800;color:var(--ink-2);background:#F1F6FD;border-radius:12px;padding:7px 10px}
+  .card .meta .lb{flex:none;background:var(--c);color:#fff;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:900}
+  .tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 10px 3px 7px;font-size:12.5px;font-weight:900;background:var(--tc);color:#fff}
+  .tag svg{width:14px;height:14px}
+  .learn{border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:800;background:#EEF4FC;color:var(--ink-2)}
 
-  /* ---------- Close ---------- */
-  .close{background:var(--ink);color:var(--paper);margin-top:72px}
-  .close .wrap{padding-top:56px;padding-bottom:40px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
-  .close .name{
-    grid-column:1 / -1;
-    margin:0;font-family:var(--display);font-weight:400;
-    font-size:min(calc((100vw - 2 * var(--m)) / 12.75), 116px);line-height:1;letter-spacing:-.02em;
-    white-space:nowrap;
-  }
-  .close p{margin:0;font-size:18px;font-weight:900;line-height:1.6;max-width:none}
-  .close .sign{font-family:var(--display);font-size:16px;text-align:right}
+  /* ================= Footer ================= */
+  footer{margin-top:64px;color:#fff}
+  footer svg.wave{display:block;width:100%;height:40px}
+  .foot{background:var(--blue-deep);padding:18px 0 30px}
+  .foot .container{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .foot .logo-mark{width:44px;height:44px}
+  .foot p{margin:0;font-size:16px;font-weight:800}
+  .foot small{margin-left:auto;font-size:13px;font-weight:700;opacity:.75}
 
-  /* ---------- Widths ---------- */
-  @media (max-width:1100px){
-    .board{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .bar h2{font-size:26px}
+  /* ================= Responsive ================= */
+  @media (max-width:1060px){
+    .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .hero-title{font-size:32px}
   }
-  @media (max-width:640px){
-    :root{--m:14px;--gap:12px;--r:20px}
-    .top{flex-direction:column;align-items:stretch;gap:12px;padding-top:16px}
-    .title h1{font-size:30px;line-height:1.1}
-    .title p{font-size:16px}
-    .pick{margin-left:0;justify-content:center}
-    .board{grid-template-columns:1fr}
-    .bar h2{font-size:24px}
-    .close .wrap{grid-template-columns:1fr}
-    .close .sign{text-align:left}
-    .close .name{white-space:normal;font-size:40px}
+  @media (max-width:860px){
+    .hero-frame{grid-template-columns:1fr}
+    .hero-art{aspect-ratio:16/9}
+    .arrow{top:28%}
+    .arrow.prev{left:8px}.arrow.next{right:8px}
+    .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .nav span.t{display:none}
   }
-  /* Chromebook window: keep the whole board on one screen */
-  @media (min-width:1101px) and (max-height:700px){
-    :root{--art:2.25;--gap:9px}
-    .top{padding:14px 0 12px}
-    .title h1{font-size:40px}
-    .title p{font-size:16px;margin-top:6px}
-    .pick{font-size:17px;padding:9px 20px 9px 10px}
-    .bar{padding:9px 12px 11px 16px}
-    .bar h2{font-size:21px}
-    .bar .what{font-size:14.5px;margin-top:4px}
-    .bar .learn{font-size:13px}
-    .play{width:46px;height:46px}
+  @media (max-width:560px){
+    .container{padding:0 16px}
+    .site-header .container{height:64px}
+    .logo-mark{width:44px;height:44px}
+    .logo-text strong{font-size:21px}
+    .nav{display:none}
+    .hero-info{padding:22px 20px 24px}
+    .hero-title{font-size:28px}
+    .hero-desc{font-size:17px}
+    .arrow{width:42px;height:42px;margin-top:-21px}
+    .pick{flex-direction:column;align-items:flex-start;gap:16px;padding:18px 14px}
+    .bubbles{gap:6px;justify-content:space-between;width:100%}
+    .bubble{width:76px}
+    .bubble .circle{width:70px;height:70px}
+    .bubble .circle svg{width:38px;height:38px}
+    .bubble .bl{font-size:13px}
+    .grid{grid-template-columns:1fr}
+    .section-title{font-size:22px}
   }
-  @media (prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation:none!important;transition:none!important}
-    .enter .tile{opacity:1;transform:none}
+  /* Chromebook window (short screen) */
+  @media (min-width:861px) and (max-height:720px){
+    .site-header .container{height:66px}
+    .logo-mark{width:48px;height:48px}
+    .header-curve{height:20px}
+    .hero-frame{min-height:0}
+    .hero-art{aspect-ratio:auto;height:300px}
+    .hero-info{padding:22px 30px}
+    .hero-title{font-size:34px;margin-top:10px}
+    .hero-desc{font-size:17px;margin-top:10px}
+    .play-btn{margin-top:16px;font-size:21px;padding:10px 26px 10px 12px}
+    .play-btn .pi{width:34px;height:34px}
+    .dots{margin-top:10px}
+    .pick{margin-top:26px}
   }
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
 </head>
-<body class="js-off">
+<body>
 
-<div class="wrap">
-  <header class="top">
-    <div class="title">
-      <h1>マーク先生のゲームセンター</h1>
-      <p>すきな ゲームを えらんで、えいごで あそぼう！</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="31" fill="#FF7A1A"/>
+      <path d="M17 17h30a7 7 0 0 1 7 7v14a7 7 0 0 1-7 7H31l-9 8v-8h-5a7 7 0 0 1-7-7V24a7 7 0 0 1 7-7z" fill="#fff"/>
+      <path d="M28 23.5v15a1.3 1.3 0 0 0 2 1.1l11.5-7.5a1.3 1.3 0 0 0 0-2.2L30 22.4a1.3 1.3 0 0 0-2 1.1z" fill="#FF7A1A"/>
+      <path d="M52 6l1.8 4.4 4.4 1.8-4.4 1.8L52 18.4l-1.8-4.4-4.4-1.8 4.4-1.8z" fill="#FFC928"/>
+    </symbol>
+    <symbol id="ic-play" viewBox="0 0 24 24"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z"/></symbol>
+    <!-- category pictures: filled, two-tone -->
+    <symbol id="ic-all" viewBox="0 0 48 48">
+      <path d="M24 5l5.6 11.7 12.8 1.8-9.3 9 2.3 12.7L24 34.1l-11.4 6.1 2.3-12.7-9.3-9 12.8-1.8z" fill="#fff"/>
+      <circle cx="24" cy="24" r="4.5" fill="#FFC928"/>
+    </symbol>
+    <symbol id="ic-eigo" viewBox="0 0 48 48">
+      <path d="M9 8h30a5 5 0 0 1 5 5v17a5 5 0 0 1-5 5H22l-9 8v-8H9a5 5 0 0 1-5-5V13a5 5 0 0 1 5-5z" fill="#fff"/>
+      <text x="24" y="28.5" text-anchor="middle" font-family="M PLUS Rounded 1c, sans-serif" font-weight="900" font-size="15" fill="#F2478E">ABC</text>
+    </symbol>
+    <symbol id="ic-world" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="19" fill="#fff"/>
+      <path d="M14 13c4 1 6 4 5 7s-5 3-5 7 3 5 2 9c-5-3-8-8-8-12 0-5 2-8 6-11zm15-6c-1 3 1 5 4 6s5 4 3 7-6 1-7 5 3 6 2 9 4 2 6-1c3-3 4-7 4-10 0-8-5-14-12-16z" fill="#22B35E"/>
+    </symbol>
+    <symbol id="ic-type" viewBox="0 0 48 48">
+      <rect x="4" y="12" width="40" height="25" rx="6" fill="#fff"/>
+      <g fill="#13A8C2"><rect x="9" y="17" width="5" height="4.5" rx="1.2"/><rect x="16.5" y="17" width="5" height="4.5" rx="1.2"/><rect x="24" y="17" width="5" height="4.5" rx="1.2"/><rect x="31.5" y="17" width="7.5" height="4.5" rx="1.2"/><rect x="9" y="24" width="7.5" height="4.5" rx="1.2"/><rect x="19" y="24" width="5" height="4.5" rx="1.2"/><rect x="26.5" y="24" width="5" height="4.5" rx="1.2"/><rect x="34" y="24" width="5" height="4.5" rx="1.2"/><rect x="14" y="31" width="20" height="3.5" rx="1.2"/></g>
+    </symbol>
+    <symbol id="ic2-eigo" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#F2478E"/><use href="#ic-eigo" transform="translate(6 6) scale(.75)"/></symbol>
+    <symbol id="ic2-world" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#22B35E"/><use href="#ic-world" transform="translate(6 6) scale(.75)"/></symbol>
+    <symbol id="ic2-type" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#13A8C2"/><use href="#ic-type" transform="translate(6 6) scale(.75)"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="./" aria-label="えいごゲームひろば ホーム">
+      <svg class="logo-mark" aria-hidden="true"><use href="#logo"/></svg>
+      <span class="logo-text"><small>MARK SENSEI</small><strong>えいごゲームひろば</strong></span>
+    </a>
+    <nav class="nav" aria-label="ゲームの しゅるい" id="nav"></nav>
+  </div>
+</header>
+<svg class="header-curve" viewBox="0 0 1440 28" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v6C1080 30 360 30 0 6z" fill="#2457E6"/></svg>
+
+<main class="container">
+  <section class="hero" aria-roledescription="carousel" aria-label="おすすめの ゲーム">
+    <div class="hero-frame" id="heroFrame">
+      <a class="hero-art" id="heroArt" href="#" tabindex="-1" aria-hidden="true"></a>
+      <div class="hero-info">
+        <span class="deco" aria-hidden="true"></span><span class="deco two" aria-hidden="true"></span>
+        <span class="hero-cat" id="heroCat"></span>
+        <h1 class="hero-title jp" id="heroTitle"></h1>
+        <div class="hero-en" id="heroEn"></div>
+        <p class="hero-desc jp" id="heroDesc"></p>
+        <div class="hero-learn" id="heroLearn"></div>
+        <a class="play-btn" id="heroPlay" href="#"><span class="pi"><svg viewBox="0 0 24 24"><use href="#ic-play"/></svg></span>あそぶ</a>
+      </div>
     </div>
-    <button class="pick" id="pick" type="button"><span class="dial" aria-hidden="true"></span><span class="label">どれに しようかな？</span></button>
-  </header>
+    <button class="arrow prev" id="prev" aria-label="まえの ゲーム"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="arrow next" id="next" aria-label="つぎの ゲーム"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="dots" id="dots" role="tablist" aria-label="おすすめを えらぶ"></div>
+  </section>
 
-  <ul class="board" id="board" aria-label="ゲーム"></ul>
-  <noscript>
-    <ul class="board">
-      <li class="tile" style="--c:#1B2F6B"><a href="https://nagasakimark.github.io/type/"><div class="art"><img src="images/type.jpg" alt=""></div><div class="bar"><div class="words"><h2>タイピングマスター</h2></div></div></a></li>
-      <li class="tile" style="--c:#0F95B5"><a href="https://nagasakimark.github.io/hop/"><div class="art"><img src="images/hop.jpg" alt=""></div><div class="bar"><div class="words"><h2>メガネホップ</h2></div></div></a></li>
-      <li class="tile" style="--c:#D63D82"><a href="https://nagasakimark.github.io/witchsoup/"><div class="art"><img src="images/witchsoup.jpg" alt=""></div><div class="bar"><div class="words"><h2>ウィッチズ・スープ</h2></div></div></a></li>
-      <li class="tile" style="--c:#C8102E"><a href="https://nagasakimark.github.io/ukexpress/"><div class="art"><img src="images/ukexpress.jpg" alt=""></div><div class="bar"><div class="words"><h2>UKエクスプレス</h2></div></div></a></li>
-      <li class="tile" style="--c:#3E9431"><a href="https://nagasakimark.github.io/hamanomachi3/"><div class="art"><img src="images/hamanomachi.jpg" alt=""></div><div class="bar"><div class="words"><h2>はまのまち</h2></div></div></a></li>
-      <li class="tile" style="--c:#E85D10"><a href="https://nagasakimark.github.io/chef/"><div class="art"><img src="images/chef.jpg" alt=""></div><div class="bar"><div class="words"><h2>トマチシェフ</h2></div></div></a></li>
-      <li class="tile" style="--c:#2F7FE0"><a href="https://nagasakimark.github.io/japanguesser/"><div class="art"><img src="images/japanguesser.jpg" alt=""></div><div class="bar"><div class="words"><h2>ジャパンゲッサー</h2></div></div></a></li>
-      <li class="tile" style="--c:#0D7B85"><a href="https://nagasakimark.github.io/globeguesser/"><div class="art"><img src="images/globeguesser.jpg" alt=""></div><div class="bar"><div class="words"><h2>グローブゲッサー</h2></div></div></a></li>
-    </ul>
-  </noscript>
-</div>
+  <section class="pick" aria-labelledby="pickTitle">
+    <h2 class="section-title" id="pickTitle">なにで あそぶ？</h2>
+    <div class="bubbles" id="bubbles" role="group" aria-label="ゲームの しゅるい"></div>
+  </section>
 
-<footer class="close">
-  <div class="wrap">
-    <p class="name">マーク先生のゲームセンター</p>
-    <p class="jp">えいごは、あそぶと おぼえられる。<br>ながさきの 教室から、あたらしい ゲームを とどけます。</p>
-    <span class="sign">Made in Nagasaki by Mark Sensei</span>
+  <section class="games" id="games" aria-labelledby="gamesTitle">
+    <div class="games-head"><h2 class="section-title" id="gamesTitle">ぜんぶの ゲーム</h2></div>
+    <div class="grid" id="grid"></div>
+  </section>
+</main>
+
+<footer>
+  <svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C240 2 480 2 720 18s480 18 720-2v24z" fill="#16349A"/></svg>
+  <div class="foot">
+    <div class="container">
+      <svg class="logo-mark" aria-hidden="true"><use href="#logo"/></svg>
+      <p class="jp">たのしく あそんで、えいごを まなぼう！</p>
+      <small>Made in Nagasaki by Mark Sensei</small>
+    </div>
   </div>
 </footer>
 
 <script>
-  // Add a game: add one entry and put its picture in images/.
-  // color = the main colour of the game's own picture.
+  // To add a game: add one entry to GAMES and put its picture in images/.
+  const CATS = {
+    eigo:  { label:"えいご",       color:"#F2478E", icon:"ic-eigo"  },
+    world: { label:"せかい・日本",  color:"#22B35E", icon:"ic-world" },
+    type:  { label:"タイピング",    color:"#13A8C2", icon:"ic-type"  },
+  };
   const GAMES = [
-    { name:"タイピングマスター", what:"えいごの ことばを タイプしよう", learn:"キーボードと えいたんご",
-      url:"https://nagasakimark.github.io/type/", img:"images/type.jpg", color:"#1B2F6B" },
-    { name:"メガネホップ", what:"音を きいて、いしを ジャンプ", learn:"フォニックス",
-      url:"https://nagasakimark.github.io/hop/", img:"images/hop.jpg", color:"#0F95B5" },
-    { name:"ウィッチズ・スープ", what:"まほうの スープを つくろう", learn:"ざいりょうの えいご",
-      url:"https://nagasakimark.github.io/witchsoup/", img:"images/witchsoup.jpg", color:"#D63D82" },
-    { name:"UKエクスプレス", what:"電車で イギリスを 旅しよう", learn:"イギリスの 町と ぶんか",
-      url:"https://nagasakimark.github.io/ukexpress/", img:"images/ukexpress.jpg", color:"#C8102E" },
-    { name:"はまのまち", what:"えいごで みちあんない しよう", learn:"Go straight. Turn left.",
-      url:"https://nagasakimark.github.io/hamanomachi3/", img:"images/hamanomachi.jpg", color:"#3E9431" },
-    { name:"トマチシェフ", what:"ちゅうもんの りょうりを つくろう", learn:"たべものの えいご",
-      url:"https://nagasakimark.github.io/chef/", img:"images/chef.jpg", color:"#E85D10" },
-    { name:"ジャパンゲッサー", what:"ここは 日本の どこかな？", learn:"日本の ちり",
-      url:"https://nagasakimark.github.io/japanguesser/", img:"images/japanguesser.jpg", color:"#2F7FE0" },
-    { name:"グローブゲッサー", what:"ここは 世界の どこかな？", learn:"世界の 国",
-      url:"https://nagasakimark.github.io/globeguesser/", img:"images/globeguesser.jpg", color:"#0D7B85" },
+    { ja:"タイピングマスター", en:"Typing Master", cat:"type", color:"#1F3C8F",
+      desc:"えいごの ことばを タイプしよう！", learn:["キーボード","えいたんご"],
+      url:"https://nagasakimark.github.io/type/", img:"images/type.jpg" },
+    { ja:"メガネホップ", en:"Megane Hop", cat:"eigo", color:"#0E95B3",
+      desc:"音を きいて、いしを ぴょんぴょん！", learn:["フォニックス"],
+      url:"https://nagasakimark.github.io/hop/", img:"images/hop.jpg" },
+    { ja:"ウィッチズ・スープ", en:"Witch's Soup", cat:"eigo", color:"#D63D82",
+      desc:"まほうの スープを つくろう！", learn:["ざいりょうの えいご"],
+      url:"https://nagasakimark.github.io/witchsoup/", img:"images/witchsoup.jpg" },
+    { ja:"UKエクスプレス", en:"UK Express", cat:"world", color:"#C8102E",
+      desc:"電車で イギリスを 旅しよう！", learn:["イギリスの 町","ぶんか"],
+      url:"https://nagasakimark.github.io/ukexpress/", img:"images/ukexpress.jpg" },
+    { ja:"はまのまち", en:"Hamanomachi", cat:"eigo", color:"#2E9A44",
+      desc:"えいごで みちあんない しよう！", learn:["みちあんない"],
+      url:"https://nagasakimark.github.io/hamanomachi3/", img:"images/hamanomachi.jpg" },
+    { ja:"トマチシェフ", en:"Tomachi Chef", cat:"eigo", color:"#E2531A",
+      desc:"ちゅうもんの りょうりを つくろう！", learn:["たべものの えいご"],
+      url:"https://nagasakimark.github.io/chef/", img:"images/chef.jpg" },
+    { ja:"ジャパンゲッサー", en:"Japan Guesser", cat:"world", color:"#2B76D6",
+      desc:"ここは 日本の どこかな？", learn:["日本の ちり"],
+      url:"https://nagasakimark.github.io/japanguesser/", img:"images/japanguesser.jpg" },
+    { ja:"グローブゲッサー", en:"Globe Guesser", cat:"world", color:"#0C7F8A",
+      desc:"ここは 世界の どこかな？", learn:["世界の 国"],
+      url:"https://nagasakimark.github.io/globeguesser/", img:"images/globeguesser.jpg" },
   ];
 
-  document.body.classList.remove("js-off");
+  const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  const board = document.getElementById("board");
+  const use = (id, cls = "") => `<svg ${cls} viewBox="0 0 48 48" aria-hidden="true"><use href="#${id}"/></svg>`;
+  const PLAY = `<svg viewBox="0 0 24 24"><use href="#ic-play"/></svg>`;
+  const FILTERS = [{ id:"all", label:"ぜんぶ", color:"#FFB000", icon:"ic-all" },
+                   ...Object.entries(CATS).map(([id, c]) => ({ id, ...c }))];
+  const count = id => id === "all" ? GAMES.length : GAMES.filter(g => g.cat === id).length;
+
+  /* ---------- Header nav ---------- */
+  $("nav").innerHTML = FILTERS.map(f =>
+    `<a href="#games" data-f="${f.id}"><span class="ni" style="background:${f.color}">${use(f.icon)}</span><span class="t">${f.label}</span></a>`).join("");
+
+  /* ---------- Bubbles ---------- */
+  $("bubbles").innerHTML = FILTERS.map(f => `
+    <button class="bubble" data-f="${f.id}" style="--bc:${f.color}" aria-pressed="false">
+      <span class="circle">${use(f.icon)}<span class="count">${count(f.id)}</span></span>
+      <span class="bl">${f.label}</span>
+    </button>`).join("");
+
+  /* ---------- Cards ---------- */
+  $("grid").innerHTML = GAMES.map(g => {
+    const c = CATS[g.cat];
+    return `
+    <a class="card" href="${g.url}" data-cat="${g.cat}" style="--c:${g.color}">
+      <div class="thumb"><img src="${g.img}" alt="" loading="lazy" width="760" height="400"><span class="hover-play">${PLAY}</span></div>
+      <div class="card-body">
+        <div class="cat" style="--tc:${c.color}">${use(c.icon.replace("ic-","ic2-"))}${c.label}</div>
+        <h3 class="jp">${esc(g.ja)}</h3>
+        <div class="en">${esc(g.en)}</div>
+        <p class="jp">${esc(g.desc)}</p>
+        <div class="meta"><span class="lb">まなべる</span><span class="jp">${g.learn.map(esc).join("、")}</span></div>
+      </div>
+    </a>`;}).join("");
+
+  function filter(id){
+    document.querySelectorAll(".bubble").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === id));
+    document.querySelectorAll(".card").forEach(c => c.hidden = !(id === "all" || c.dataset.cat === id));
+    const f = FILTERS.find(x => x.id === id);
+    $("gamesTitle").textContent = id === "all" ? "ぜんぶの ゲーム" : `${f.label}の ゲーム`;
+  }
+  $("bubbles").addEventListener("click", e => { const b = e.target.closest(".bubble"); if (b) filter(b.dataset.f); });
+  $("nav").addEventListener("click", e => { const a = e.target.closest("a"); if (a) filter(a.dataset.f); });
+  filter("all");
+
+  /* ---------- Hero carousel ---------- */
+  const art = $("heroArt"), frame = $("heroFrame");
+  GAMES.forEach(g => { const im = new Image(); im.src = g.img; im.alt = ""; art.appendChild(im); });
+  const pics = [...art.children];
+  $("dots").innerHTML = GAMES.map((g, i) => `<button role="tab" aria-label="${esc(g.ja)}" data-i="${i}"></button>`).join("");
+  const dots = [...$("dots").children];
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let cur = 0, timer;
 
-  board.innerHTML = GAMES.map((g, i) => `
-    <li class="tile" style="--c:${g.color};--i:${i}">
-      <a href="${g.url}" aria-label="${esc(g.name)}：${esc(g.what)}">
-        <div class="art"><img src="${g.img}" alt="" width="760" height="400"></div>
-        <div class="bar">
-          <div class="words">
-            <h2>${esc(g.name)}</h2>
-            <p class="what">${esc(g.what)}</p>
-            <p class="learn"><b>まなべる</b>　${esc(g.learn)}</p>
-          </div>
-          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z"/></svg></span>
-        </div>
-      </a>
-      <span class="flag" aria-hidden="true">これに けってい！</span>
-    </li>`).join("");
-
-  /* One entrance for the board */
-  if (!reduce) {
-    board.classList.add("enter");
-    requestAnimationFrame(() => requestAnimationFrame(() => board.classList.add("go")));
-    setTimeout(() => board.classList.remove("enter", "go"), 1400);
+  function show(i){
+    cur = (i + GAMES.length) % GAMES.length;
+    const g = GAMES[cur], c = CATS[g.cat];
+    frame.style.setProperty("--hc", g.color);
+    pics.forEach((p, k) => p.classList.toggle("on", k === cur));
+    dots.forEach((d, k) => d.setAttribute("aria-selected", k === cur));
+    $("heroCat").innerHTML = use(c.icon) + c.label;
+    $("heroTitle").textContent = g.ja;
+    $("heroEn").textContent = g.en;
+    $("heroDesc").textContent = g.desc;
+    $("heroLearn").innerHTML = `<span class="lbl">まなべること</span>` + g.learn.map(l => `<span class="chip">${esc(l)}</span>`).join("");
+    $("heroPlay").href = art.href = g.url;
+    restart();
   }
-
-  /* どれに しようかな — the roulette */
-  const tiles = [...board.children];
-  const pick = document.getElementById("pick");
-  const label = pick.querySelector(".label");
-  let busy = false, clearTimer;
-
-  function clearWin(){
-    board.classList.remove("landed");
-    tiles.forEach(t => t.classList.remove("won"));
-  }
-  function land(i){
-    board.classList.remove("spinning");
-    tiles.forEach(t => t.classList.remove("lit"));
-    board.classList.add("landed");
-    tiles[i].classList.add("won");
-    tiles[i].querySelector("a").focus({ preventScroll:true });
-    tiles[i].scrollIntoView({ block:"nearest", behavior: reduce ? "auto" : "smooth" });
-    pick.removeAttribute("aria-busy");
-    label.textContent = "もう いっかい";
-    busy = false;
-    clearTimeout(clearTimer);
-    clearTimer = setTimeout(clearWin, 8000);
-  }
-  pick.addEventListener("click", () => {
-    if (busy) return;
-    busy = true; clearWin();
-    pick.setAttribute("aria-busy", "true");
-    const target = Math.floor(Math.random() * tiles.length);
-    if (reduce) return land(target);
-    // twice round the board, then on to the chosen game, slowing down at the end
-    const steps = tiles.length * 2 + target + 1;
-    let n = 0, delay = 55;
-    board.classList.add("spinning");
-    (function step(){
-      tiles.forEach(t => t.classList.remove("lit"));
-      const at = n % tiles.length;
-      tiles[at].classList.add("lit");
-      n++;
-      if (n >= steps) return setTimeout(() => land(at), 260);
-      if (n > steps - 8) delay *= 1.32;
-      setTimeout(step, delay);
-    })();
-  });
-  board.addEventListener("pointerdown", e => { if (!e.target.closest(".won")) clearWin(); });
+  function restart(){ clearInterval(timer); if (!reduce) timer = setInterval(() => show(cur + 1), 6000); }
+  $("prev").onclick = () => show(cur - 1);
+  $("next").onclick = () => show(cur + 1);
+  $("dots").addEventListener("click", e => { const d = e.target.closest("button"); if (d) show(+d.dataset.i); });
+  const hero = document.querySelector(".hero");
+  hero.addEventListener("mouseenter", () => clearInterval(timer));
+  hero.addEventListener("mouseleave", restart);
+  hero.addEventListener("focusin", () => clearInterval(timer));
+  show(0);
 </script>
 </body>
 </html>
