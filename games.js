@@ -1,0 +1,99 @@
+/* ============================================================
+   GAMES LIST  —  this is the only file you need to edit.
+
+   To add a game, copy any block below, paste it where you want
+   it to appear, and change the words after each label.
+   Leave one empty line between games.
+
+     name:     Japanese title (shown big)                REQUIRED
+     english:  English title (shown small)
+     type:     えいご / せかい / タイピング
+               (type a new word and a new button appears for it)
+     about:    one short line saying what the game is
+     learn:    what students learn (separate several with 、)
+     link:     the game's web address                    REQUIRED
+     image:    picture address, or images/your-file.jpg   REQUIRED
+     new:      yes   (optional: shows a NEW badge)
+     color:    #RRGGBB (optional: the colour is normally picked
+               from the picture automatically)
+
+   Any picture shape works; it is cropped to fit the cards.
+   Games show on the page in the same order as this list.
+   To hide a game, delete its block.
+   ============================================================ */
+
+window.GAMES_TEXT = `
+
+name: タイピングマスター
+english: Typing Master
+type: タイピング
+about: えいごの ことばを タイプしよう！
+learn: キーボード、えいたんご
+link: https://nagasakimark.github.io/type/
+image: images/type.jpg
+color: #1F3C8F
+
+name: メガネホップ
+english: Megane Hop
+type: えいご
+about: 音を きいて、いしを ぴょんぴょん！
+learn: フォニックス
+link: https://nagasakimark.github.io/hop/
+image: images/hop.jpg
+color: #0E95B3
+
+name: ウィッチズ・スープ
+english: Witch's Soup
+type: えいご
+about: まほうの スープを つくろう！
+learn: ざいりょうの えいご
+link: https://nagasakimark.github.io/witchsoup/
+image: images/witchsoup.jpg
+color: #D63D82
+
+name: UKエクスプレス
+english: UK Express
+type: せかい
+about: 電車で イギリスを 旅しよう！
+learn: イギリスの 町、ぶんか
+link: https://nagasakimark.github.io/ukexpress/
+image: images/ukexpress.jpg
+color: #C8102E
+
+name: はまのまち
+english: Hamanomachi
+type: えいご
+about: えいごで みちあんない しよう！
+learn: みちあんない
+link: https://nagasakimark.github.io/hamanomachi3/
+image: images/hamanomachi.jpg
+color: #2E9A44
+
+name: トマチシェフ
+english: Tomachi Chef
+type: えいご
+about: ちゅうもんの りょうりを つくろう！
+learn: たべものの えいご
+link: https://nagasakimark.github.io/chef/
+image: images/chef.jpg
+color: #E2531A
+
+name: ジャパンゲッサー
+english: Japan Guesser
+type: せかい
+about: ここは 日本の どこかな？
+learn: 日本の ちり
+link: https://nagasakimark.github.io/japanguesser/
+image: images/japanguesser.jpg
+color: #2B76D6
+
+name: グローブゲッサー
+english: Globe Guesser
+type: せかい
+about: ここは 世界の どこかな？
+learn: 世界の 国
+link: https://nagasakimark.github.io/globeguesser/
+image: images/globeguesser.jpg
+color: #0C7F8A
+
+`;

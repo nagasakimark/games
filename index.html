@@ -161,6 +161,8 @@
     transform:scale(.4);opacity:0;transition:transform .25s cubic-bezier(.3,1.6,.5,1), opacity .15s;
   }
   .thumb .hover-play svg{width:24px;height:24px;fill:#fff;margin-left:4px}
+  .new-badge{position:absolute;left:10px;top:10px;z-index:1;background:var(--yellow);color:var(--ink);font-size:13px;font-weight:900;letter-spacing:.04em;border-radius:999px;padding:4px 11px;box-shadow:0 3px 0 rgba(0,0,0,.18);transform:rotate(-4deg)}
+  .hero-new{background:var(--yellow);color:var(--ink);border-radius:999px;padding:1px 8px;margin-left:4px;font-weight:900}
   .card:hover .hover-play,.card:focus-visible .hover-play{transform:scale(1);opacity:1}
   .card-body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;border-top:5px solid var(--c)}
   .card .cat{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:900;color:var(--tc);margin-bottom:3px}
@@ -264,6 +266,7 @@
     <symbol id="ic2-eigo" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#F2478E"/><use href="#ic-eigo" transform="translate(6 6) scale(.75)"/></symbol>
     <symbol id="ic2-world" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#22B35E"/><use href="#ic-world" transform="translate(6 6) scale(.75)"/></symbol>
     <symbol id="ic2-type" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#13A8C2"/><use href="#ic-type" transform="translate(6 6) scale(.75)"/></symbol>
+    <symbol id="ic2-all" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="currentColor"/><use href="#ic-all" transform="translate(6 6) scale(.75)"/></symbol>
   </defs>
 </svg>
 
@@ -319,71 +322,116 @@
   </div>
 </footer>
 
+<script src="games.js"></script>
 <script>
-  // To add a game: add one entry to GAMES and put its picture in images/.
-  const CATS = {
-    eigo:  { label:"えいご",       color:"#F2478E", icon:"ic-eigo"  },
-    world: { label:"せかい・日本",  color:"#22B35E", icon:"ic-world" },
-    type:  { label:"タイピング",    color:"#13A8C2", icon:"ic-type"  },
+  /* Games come from games.js (window.GAMES_TEXT). Edit that file, not this one. */
+  const KNOWN = {
+    eigo:  { label:"えいご",       color:"#F2478E", icon:"ic-eigo",  match:/えいご|英語|english/i },
+    world: { label:"せかい・日本",  color:"#22B35E", icon:"ic-world", match:/せかい|世界|日本|にほん|world|japan/i },
+    type:  { label:"タイピング",    color:"#13A8C2", icon:"ic-type",  match:/タイピング|たいぴんぐ|typ/i },
   };
-  const GAMES = [
-    { ja:"タイピングマスター", en:"Typing Master", cat:"type", color:"#1F3C8F",
-      desc:"えいごの ことばを タイプしよう！", learn:["キーボード","えいたんご"],
-      url:"https://nagasakimark.github.io/type/", img:"images/type.jpg" },
-    { ja:"メガネホップ", en:"Megane Hop", cat:"eigo", color:"#0E95B3",
-      desc:"音を きいて、いしを ぴょんぴょん！", learn:["フォニックス"],
-      url:"https://nagasakimark.github.io/hop/", img:"images/hop.jpg" },
-    { ja:"ウィッチズ・スープ", en:"Witch's Soup", cat:"eigo", color:"#D63D82",
-      desc:"まほうの スープを つくろう！", learn:["ざいりょうの えいご"],
-      url:"https://nagasakimark.github.io/witchsoup/", img:"images/witchsoup.jpg" },
-    { ja:"UKエクスプレス", en:"UK Express", cat:"world", color:"#C8102E",
-      desc:"電車で イギリスを 旅しよう！", learn:["イギリスの 町","ぶんか"],
-      url:"https://nagasakimark.github.io/ukexpress/", img:"images/ukexpress.jpg" },
-    { ja:"はまのまち", en:"Hamanomachi", cat:"eigo", color:"#2E9A44",
-      desc:"えいごで みちあんない しよう！", learn:["みちあんない"],
-      url:"https://nagasakimark.github.io/hamanomachi3/", img:"images/hamanomachi.jpg" },
-    { ja:"トマチシェフ", en:"Tomachi Chef", cat:"eigo", color:"#E2531A",
-      desc:"ちゅうもんの りょうりを つくろう！", learn:["たべものの えいご"],
-      url:"https://nagasakimark.github.io/chef/", img:"images/chef.jpg" },
-    { ja:"ジャパンゲッサー", en:"Japan Guesser", cat:"world", color:"#2B76D6",
-      desc:"ここは 日本の どこかな？", learn:["日本の ちり"],
-      url:"https://nagasakimark.github.io/japanguesser/", img:"images/japanguesser.jpg" },
-    { ja:"グローブゲッサー", en:"Globe Guesser", cat:"world", color:"#0C7F8A",
-      desc:"ここは 世界の どこかな？", learn:["世界の 国"],
-      url:"https://nagasakimark.github.io/globeguesser/", img:"images/globeguesser.jpg" },
-  ];
+  const EXTRA_COLORS = ["#FF8A00", "#E8483B", "#1F8FE0", "#6DB31B", "#0C7F8A"];
+  const CATS = {};
+
+  function categoryFor(text){
+    const t = (text || "").trim();
+    for (const [id, k] of Object.entries(KNOWN)) if (k.match.test(t)) { CATS[id] ??= k; return id; }
+    const id = "c-" + (t || "other");
+    CATS[id] ??= { label: t || "そのほか", color: EXTRA_COLORS[(Object.keys(CATS).length) % EXTRA_COLORS.length], icon:"ic-all", custom:true };
+    return id;
+  }
+
+  function parseGames(text){
+    const out = [];
+    for (const block of String(text || "").split(/\n\s*\n/)) {
+      const f = {};
+      for (const line of block.split("\n")) {
+        const m = line.match(/^\s*([a-zA-Z]+)\s*[:：]\s*(.*)$/);
+        if (m) f[m[1].toLowerCase()] = m[2].trim();
+      }
+      if (!Object.keys(f).length) continue;
+      if (!f.name || !f.link || !f.image) { console.warn("games.js: a game needs name, link and image", f); continue; }
+      out.push({
+        ja: f.name, en: f.english || "", desc: f.about || "",
+        learn: (f.learn || "").split(/[、,，]/).map(x => x.trim()).filter(Boolean),
+        url: f.link, img: f.image,
+        cat: categoryFor(f.type),
+        isNew: /^(yes|y|はい|true|new)$/i.test(f.new || ""),
+        color: /^#[0-9a-f]{3,8}$/i.test(f.color || "") ? f.color : null,
+      });
+    }
+    return out;
+  }
+  const GAMES = parseGames(window.GAMES_TEXT);
+  GAMES.forEach(g => { g.auto = !g.color; if (!g.color) g.color = CATS[g.cat].color; });
+
+  /* Pick a strong colour from the picture so a new game fits without choosing one. */
+  function colourFromImage(src, done){
+    const im = new Image();
+    im.crossOrigin = "anonymous";
+    im.onload = () => {
+      try {
+        const c = document.createElement("canvas"); c.width = c.height = 36;
+        const x = c.getContext("2d", { willReadFrequently:true });
+        x.drawImage(im, 0, 0, 36, 36);
+        const d = x.getImageData(0, 0, 36, 36).data, bins = Array.from({length:12}, () => [0,0,0,0]);
+        for (let i = 0; i < d.length; i += 4) {
+          const r = d[i]/255, g = d[i+1]/255, b = d[i+2]/255, mx = Math.max(r,g,b), mn = Math.min(r,g,b);
+          const sat = mx ? (mx - mn) / mx : 0;
+          if (mx < .25 || sat < .25) continue;
+          let h = mx === mn ? 0 : mx === r ? ((g - b) / (mx - mn)) % 6 : mx === g ? (b - r) / (mx - mn) + 2 : (r - g) / (mx - mn) + 4;
+          const bin = bins[(Math.round(h * 2) + 12) % 12], w = sat * sat * mx;
+          bin[0] += r*w; bin[1] += g*w; bin[2] += b*w; bin[3] += w;
+        }
+        const best = bins.reduce((a, b) => b[3] > a[3] ? b : a);
+        if (!best[3]) return done(null);
+        let [r, g, b] = best.slice(0, 3).map(v => v / best[3]);
+        // to HSL, then make it deep enough for white text
+        const mx = Math.max(r,g,b), mn = Math.min(r,g,b), l = (mx + mn) / 2, dd = mx - mn;
+        let h = 0, s = dd ? dd / (1 - Math.abs(2*l - 1)) : 0;
+        if (dd) h = mx === r ? ((g - b) / dd) % 6 : mx === g ? (b - r) / dd + 2 : (r - g) / dd + 4;
+        h = (h * 60 + 360) % 360;
+        const L = Math.min(Math.max(l, .3), .42), S = Math.max(s, .6);
+        done(`hsl(${Math.round(h)} ${Math.round(S*100)}% ${Math.round(L*100)}%)`);
+      } catch (e) { done(null); }
+    };
+    im.onerror = () => done(null);
+    im.src = src;
+  }
 
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const use = (id, cls = "") => `<svg ${cls} viewBox="0 0 48 48" aria-hidden="true"><use href="#${id}"/></svg>`;
   const PLAY = `<svg viewBox="0 0 24 24"><use href="#ic-play"/></svg>`;
+  const ORDER = ["eigo", "world", "type"];
   const FILTERS = [{ id:"all", label:"ぜんぶ", color:"#FFB000", icon:"ic-all" },
-                   ...Object.entries(CATS).map(([id, c]) => ({ id, ...c }))];
+                   ...Object.entries(CATS).map(([id, c]) => ({ id, ...c }))
+                     .sort((x, y) => (ORDER.indexOf(x.id) + 1 || 99) - (ORDER.indexOf(y.id) + 1 || 99))];
   const count = id => id === "all" ? GAMES.length : GAMES.filter(g => g.cat === id).length;
 
   /* ---------- Header nav ---------- */
   $("nav").innerHTML = FILTERS.map(f =>
-    `<a href="#games" data-f="${f.id}"><span class="ni" style="background:${f.color}">${use(f.icon)}</span><span class="t">${f.label}</span></a>`).join("");
+    `<a href="#games" data-f="${esc(f.id)}"><span class="ni" style="background:${f.color}">${use(f.icon)}</span><span class="t">${esc(f.label)}</span></a>`).join("");
 
   /* ---------- Bubbles ---------- */
   $("bubbles").innerHTML = FILTERS.map(f => `
-    <button class="bubble" data-f="${f.id}" style="--bc:${f.color}" aria-pressed="false">
+    <button class="bubble" data-f="${esc(f.id)}" style="--bc:${f.color}" aria-pressed="false">
       <span class="circle">${use(f.icon)}<span class="count">${count(f.id)}</span></span>
-      <span class="bl">${f.label}</span>
+      <span class="bl jp">${esc(f.label)}</span>
     </button>`).join("");
 
   /* ---------- Cards ---------- */
-  $("grid").innerHTML = GAMES.map(g => {
+  $("grid").innerHTML = GAMES.map((g, i) => {
     const c = CATS[g.cat];
     return `
-    <a class="card" href="${g.url}" data-cat="${g.cat}" style="--c:${g.color}">
-      <div class="thumb"><img src="${g.img}" alt="" loading="lazy" width="760" height="400"><span class="hover-play">${PLAY}</span></div>
+    <a class="card" href="${esc(g.url)}" data-cat="${esc(g.cat)}" data-i="${i}" style="--c:${g.color}">
+      <div class="thumb"><img src="${esc(g.img)}" alt="" loading="lazy" width="760" height="400"><span class="hover-play">${PLAY}</span>${g.isNew ? '<span class="new-badge">NEW!</span>' : ""}</div>
       <div class="card-body">
-        <div class="cat" style="--tc:${c.color}">${use(c.icon.replace("ic-","ic2-"))}${c.label}</div>
+        <div class="cat" style="--tc:${c.color}">${use(c.custom ? "ic2-all" : c.icon.replace("ic-","ic2-"))}${esc(c.label)}</div>
         <h3 class="jp">${esc(g.ja)}</h3>
-        <div class="en">${esc(g.en)}</div>
-        <p class="jp">${esc(g.desc)}</p>
-        <div class="meta"><span class="lb">まなべる</span><span class="jp">${g.learn.map(esc).join("、")}</span></div>
+        ${g.en ? `<div class="en">${esc(g.en)}</div>` : ""}
+        ${g.desc ? `<p class="jp">${esc(g.desc)}</p>` : `<p></p>`}
+        ${g.learn.length ? `<div class="meta"><span class="lb">まなべる</span><span class="jp">${g.learn.map(esc).join("、")}</span></div>` : ""}
       </div>
     </a>`;}).join("");
 
@@ -392,6 +440,12 @@
     document.querySelectorAll(".card").forEach(c => c.hidden = !(id === "all" || c.dataset.cat === id));
     const f = FILTERS.find(x => x.id === id);
     $("gamesTitle").textContent = id === "all" ? "ぜんぶの ゲーム" : `${f.label}の ゲーム`;
+  }
+  function applyColour(i, col){
+    GAMES[i].color = col;
+    const card = document.querySelector(`.card[data-i="${i}"]`);
+    if (card) card.style.setProperty("--c", col);
+    if (i === cur) frame.style.setProperty("--hc", col);
   }
   $("bubbles").addEventListener("click", e => { const b = e.target.closest(".bubble"); if (b) filter(b.dataset.f); });
   $("nav").addEventListener("click", e => { const a = e.target.closest("a"); if (a) filter(a.dataset.f); });
@@ -412,11 +466,11 @@
     frame.style.setProperty("--hc", g.color);
     pics.forEach((p, k) => p.classList.toggle("on", k === cur));
     dots.forEach((d, k) => d.setAttribute("aria-selected", k === cur));
-    $("heroCat").innerHTML = use(c.icon) + c.label;
+    $("heroCat").innerHTML = use(c.icon) + esc(c.label) + (g.isNew ? ' <span class="hero-new">NEW!</span>' : "");
     $("heroTitle").textContent = g.ja;
     $("heroEn").textContent = g.en;
     $("heroDesc").textContent = g.desc;
-    $("heroLearn").innerHTML = `<span class="lbl">まなべること</span>` + g.learn.map(l => `<span class="chip">${esc(l)}</span>`).join("");
+    $("heroLearn").innerHTML = g.learn.length ? `<span class="lbl">まなべること</span>` + g.learn.map(l => `<span class="chip">${esc(l)}</span>`).join("") : "";
     $("heroPlay").href = art.href = g.url;
     restart();
   }
@@ -429,6 +483,9 @@
   hero.addEventListener("mouseleave", restart);
   hero.addEventListener("focusin", () => clearInterval(timer));
   show(0);
+
+  /* colours for games that did not set one */
+  GAMES.forEach((g, i) => { if (g.auto) colourFromImage(g.img, col => { if (col) applyColour(i, col); }); });
 </script>
 </body>
 </html>
