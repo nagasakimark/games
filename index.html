@@ -6,7 +6,7 @@
 <title>えいごゲームひろば | Mark Sensei</title>
 <meta name="description" content="えいごを たのしく まなべる ゲームが いっぱい！">
 <meta name="theme-color" content="#2457E6">
-<link rel="icon" href="images/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/games/images/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -399,7 +399,7 @@
     <svg class="spark s4" viewBox="0 0 24 24"><use href="#star"/></svg>
   </div>
   <div class="container">
-    <a class="logo" href="./" aria-label="えいごゲームひろば ホーム">
+    <a class="logo" href="/games/" aria-label="えいごゲームひろば ホーム">
       <svg class="logo-mark" aria-hidden="true"><use href="#logo"/></svg>
       <span class="logo-text"><small>MARK SENSEI</small><strong>えいごゲームひろば</strong></span>
     </a>
@@ -455,7 +455,7 @@
   </div>
 </footer>
 
-<script src="games.js"></script>
+<script src="/games/games.js"></script>
 <script>
   /* Games come from games.js (window.GAMES_TEXT). Edit that file, not this one. */
   const KNOWN = {
@@ -487,7 +487,7 @@
       out.push({
         ja: f.name, en: f.english || "", desc: f.about || "",
         learn: (f.learn || "").split(/[、,，]/).map(x => x.trim()).filter(Boolean),
-        url: f.link, img: f.image,
+        url: f.link, img: /^(https?:)?\/\//.test(f.image) ? f.image : "/games/" + f.image.replace(/^\.?\//, ""),
         cat: categoryFor(f.type),
         isNew: /^(yes|y|はい|true|new)$/i.test(f.new || ""),
         color: /^#[0-9a-f]{3,8}$/i.test(f.color || "") ? f.color : null,
