@@ -19,10 +19,11 @@ image: images/hop.webp
 - `name`, `link` and `image` are required; everything else is optional.
 - `image` can be a full web address or a file you put in `images/`. Any shape works. Small WebP files load fastest (squoosh.app converts a picture in a few clicks).
 - `type`: えいご, せかい or タイピング. Write a new word and a new category button appears.
-- `new: yes` puts a NEW! badge on the game.
+- `created:` and `updated:` (year-month-day, like 2026-10-31) put the game in order automatically. Games made in the last 14 days come first with NEW!, then the rest by latest update, with UPDATE! for 14 days after an update. Just change `updated:` when you improve a game.
+- `new: yes` forces a NEW! badge.
 - The card colour is taken from the picture. Add `color: #RRGGBB` to choose it yourself.
 
-Games appear in the same order as the file. The banner, the category buttons and their counts all update on their own.
+Games with dates are ordered automatically; games without dates stay in file order after them. The banner, the category buttons and their counts all update on their own.
 
 ## Syncing (home and work)
 

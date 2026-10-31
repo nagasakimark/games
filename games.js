@@ -13,12 +13,18 @@
      learn:    what students learn (separate several with 、)
      link:     the game's web address                    REQUIRED
      image:    picture address, or images/your-file.webp   REQUIRED
-     new:      yes   (optional: shows a NEW badge)
+     created:  2026-10-31   (the day you made it, year-month-day)
+     updated:  2026-10-31   (the day of its last big update)
+     new:      yes   (optional: force a NEW badge)
      color:    #RRGGBB (optional: the colour is normally picked
                from the picture automatically)
 
    Any picture shape works; it is cropped to fit the cards.
-   Games show on the page in the same order as this list.
+   ORDER IS AUTOMATIC when you give dates: games made in the last
+   14 days come first with a NEW! badge (newest first), then everything
+   by its last update, with an UPDATE! badge for 14 days after an update.
+   When you update a game, just change its "updated:" date.
+   Games without dates stay in list order, after the dated ones.
    To hide a game, delete its block.
    ============================================================ */
 
@@ -32,6 +38,8 @@ learn: えいたんご
 link: https://nagasakimark.github.io/shaperunner/
 image: images/shapes.webp
 color: #15AD15
+created: 2025-02-24
+updated: 2026-10-29
 
 name: タイピングマスター
 english: Typing Master
@@ -41,6 +49,8 @@ learn: キーボード、えいたんご
 link: https://nagasakimark.github.io/type/
 image: images/type.webp
 color: #1F3C8F
+created: 2026-10-07
+updated: 2026-10-27
 
 name: メガネホップ
 english: Megane Hop
@@ -50,6 +60,8 @@ learn: フォニックス
 link: https://nagasakimark.github.io/hop/
 image: images/hop.webp
 color: #0E95B3
+created: 2026-09-28
+updated: 2026-10-31
 
 name: ウィッチズ・スープ
 english: Witch's Soup
@@ -59,6 +71,8 @@ learn: ざいりょうの えいご
 link: https://nagasakimark.github.io/witchsoup/
 image: images/witchsoup.webp
 color: #D63D82
+created: 2025-10-27
+updated: 2025-10-29
 
 name: UKエクスプレス
 english: UK Express
@@ -68,6 +82,8 @@ learn: イギリスの 町、ぶんか
 link: https://nagasakimark.github.io/ukexpress/
 image: images/ukexpress.webp
 color: #C8102E
+created: 2026-10-04
+updated: 2026-10-27
 
 name: マップクエスト
 english: Map Quest
@@ -77,6 +93,8 @@ learn: みちあんない
 link: https://nagasakimark.github.io/hamanomachi3/
 image: images/hamanomachi.webp
 color: #2E9A44
+created: 2026-09-27
+updated: 2026-10-25
 
 name: トマチシェフ
 english: Tomachi Chef
@@ -86,6 +104,8 @@ learn: たべものの えいご
 link: https://nagasakimark.github.io/chef/
 image: images/chef.webp
 color: #E2531A
+created: 2026-09-20
+updated: 2026-10-16
 
 name: ジャパンゲッサー
 english: Japan Guesser
@@ -95,6 +115,8 @@ learn: 日本の ちり
 link: https://nagasakimark.github.io/japanguesser/
 image: images/japanguesser.webp
 color: #2B76D6
+created: 2025-08-28
+updated: 2025-08-28
 
 name: グローブゲッサー
 english: Globe Guesser
@@ -104,6 +126,8 @@ learn: 世界の 国
 link: https://nagasakimark.github.io/globeguesser/
 image: images/globeguesser.webp
 color: #0C7F8A
+created: 2025-08-19
+updated: 2025-08-28
 
 name: ミールディール
 english: Meal Deal Maker
@@ -113,6 +137,8 @@ learn: イギリスの ぶんか、おかね
 link: https://nagasakimark.github.io/mealdeal/
 image: images/mealdeal.webp
 color: #1F55C4
+created: 2026-10-29
+updated: 2026-10-30
 
 name: カントリーファクツ
 english: Country Facts
@@ -122,6 +148,8 @@ learn: 世界の 国、くらべかた
 link: https://nagasakimark.github.io/countryfacts/
 image: images/countryfacts.webp
 color: #1675C0
+created: 2026-09-17
+updated: 2026-10-29
 
 name: ワードル
 english: Wordle
@@ -131,6 +159,8 @@ learn: たんごの つづり
 link: https://nagasakimark.github.io/wordle/
 image: images/wordle.webp
 color: #2F7D3A
+created: 2025-03-24
+updated: 2026-10-29
 
 name: テスコードル
 english: Tescodle
@@ -140,5 +170,18 @@ learn: イギリスの おかね、すうじ
 link: https://nagasakimark.github.io/tescodle/
 image: images/tescodle.webp
 color: #D81920
+created: 2026-03-11
+updated: 2026-10-29
+
+name: ペーロンレース
+english: Peiron Race
+type: えいご
+about: ながさきの ペーロンで ただしい ことばを えらぼう！
+learn: えいごの ぶんぽう
+link: https://nagasakimark.github.io/peiron/
+image: images/peiron.webp
+color: #D4271F
+created: 2026-10-31
+updated: 2026-10-31
 
 `;
