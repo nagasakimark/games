@@ -32,3 +32,7 @@ Double-click **`sync-site.bat`** whenever you start or finish editing `games.js`
 - GitHub is newer: it downloads the update.
 - You changed something: it uploads it, and the site updates in about a minute.
 - Both changed: it warns you and lets you choose to merge, keep GitHub's version, or keep yours. Whatever you don't keep is saved in a backup branch first.
+
+
+## Adding a game
+Copy the block at the top of `games.js`, fill it in, add a 760x400 `.webp` to `images/`, run `sync-site.bat`. The ALT homepage picks it up automatically. NEW/UPDATE badges expire after 14 days on their own.
