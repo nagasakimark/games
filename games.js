@@ -48,6 +48,54 @@ updated: 2026-11-01
 
 window.GAMES_TEXT = `
 
+name: ドゥードゥルタイム
+english: Doodle Time
+type: えいご
+about: えを かいて、ロボットに あてて もらおう！
+summary: Draw the word and see if the AI robot can guess it.
+learn: えいたんご
+link: https://nagasakimark.github.io/doodle/
+image: images/doodle.webp
+color: #2F8FE8
+added: 2026-11-06
+updated: 2026-11-06
+
+name: ワードプッシュ
+english: Word Push
+type: えいご
+about: ことばブロックを おして、ぶんを つくろう！
+summary: Push word blocks into the right order to make sentences and change the world.
+learn: えいごの ぶんの じゅんばん
+link: https://nagasakimark.github.io/wordpush/
+image: images/wordpush.webp
+color: #3DAA2F
+added: 2026-11-06
+updated: 2026-11-06
+
+name: ヒドゥンレターズ
+english: Hidden Letters
+type: えいご
+about: かくれている もじを みつけよう！
+summary: Find the hidden letters.
+learn: アルファベット
+link: https://nagasakimark.github.io/hiddenletters/
+image: images/hiddenletters.webp
+color: #35A9F0
+added: 2026-11-06
+updated: 2026-11-06
+
+name: リスンアップ
+english: Listen Up
+type: えいご
+about: よく きいて、こたえよう！
+summary: Listen carefully and choose the right answer.
+learn: リスニング
+link: https://nagasakimark.github.io/listenup/
+image: images/listenup.webp
+color: #F59A0C
+added: 2026-11-06
+updated: 2026-11-06
+
 name: シェイプランナー
 english: Shape runner
 type: スピーキング
