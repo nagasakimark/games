@@ -48,6 +48,17 @@ updated: 2026-11-01
 
 window.GAMES_TEXT = `
 
+name: タマトーク
+english: Tama Talk
+type: えいご
+about: えいごで ペットの おせわを しよう！
+summary: Look after a virtual pet that tells you what it needs in English.
+learn: えいたんご、 I want ~
+link: https://nagasakimark.github.io/tama/
+image: images/tama.webp
+added: 2026-11-15
+updated: 2026-11-15
+
 name: ドゥードゥルタイム
 english: Doodle Time
 type: えいご
