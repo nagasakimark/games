@@ -21,6 +21,8 @@
      added:    2026-10-31   (the day you made it: year-month-day)
      updated:  2026-10-31   (the day of its last big update)
      color:    #RRGGBB (optional: normally picked from the picture)
+     altlink:  different address for the ALT projects homepage
+               (optional, e.g. a ?teacher version with settings)
 
    NEW and UPDATE badges are automatic. A game is NEW for 14 days
    after its "added" date, then shows UPDATE for 14 days after each
@@ -47,6 +49,18 @@ updated: 2026-11-01
 */
 
 window.GAMES_TEXT = `
+
+name: つながりさがし
+english: Connections
+type: えいご
+about: 16この ことばから 4つの なかまを 見つけよう！
+summary: NYT-style Connections - sort 16 words into 4 groups of 4, using My Picture Dictionary categories.
+learn: えいたんご、なかまわけ
+link: https://nagasakimark.github.io/connections/
+altlink: https://nagasakimark.github.io/connections/?teacher
+image: images/connections.webp
+added: 2026-11-17
+updated: 2026-11-17
 
 name: タマトーク
 english: Tama Talk
