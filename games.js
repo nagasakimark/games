@@ -50,6 +50,17 @@ updated: 2026-11-01
 
 window.GAMES_TEXT = `
 
+name: せかいたんけん
+english: Earth Explorer
+type: せかい
+about: 3Dの 地球を まわして、 世界の たてものや どうぶつを 見つけよう！
+summary: A 3D globe toy: explore landmarks, animals and countries, collect stickers, ride real routes and play geography quizzes.
+learn: 世界の 国、たてもの、どうぶつ
+link: https://nagasakimark.github.io/earthexplorer/
+image: images/earthexplorer.webp
+added: 2026-11-20
+updated: 2026-11-20
+
 name: つながりさがし
 english: Connections
 type: えいご
