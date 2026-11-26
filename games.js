@@ -50,6 +50,18 @@ updated: 2026-11-01
 
 window.GAMES_TEXT = `
 
+name: フードゲッサー
+english: Food Guesser
+type: せかい
+about: りょうりの しゃしんを 見て、どこの 国の りょうりか あてよう！
+summary: FoodGuessr-style: guess which country a dish is from, match dishes to countries, and pick the better-known dish in VS battles. Daily challenge; starts with My Picture Dictionary countries, unlocks the rest.
+learn: 世界の 国、りょうりの なまえ
+link: https://nagasakimark.github.io/foodguesser/
+altlink: https://nagasakimark.github.io/foodguesser/?teacher
+image: images/foodguesser.webp
+added: 2026-11-24
+updated: 2026-11-25
+
 name: せかいたんけん
 english: Earth Explorer
 type: せかい

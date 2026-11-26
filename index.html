@@ -79,7 +79,8 @@
     box-shadow:0 10px 28px rgba(28,62,140,.22);
     transition:background-color .5s;
   }
-  .hero-art{position:relative;display:block;overflow:hidden;background:#cfe0f2;aspect-ratio:760/400}
+  .hero-art{position:relative;display:block;overflow:hidden;background:#cfe0f2;align-self:stretch}
+  .hero-art::before{content:"";display:block;aspect-ratio:760/400} /* keeps the 760x400 shape as a minimum; the picture still fills the whole height when the text side is taller */
   .hero-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.03);transition:opacity .55s, transform 6s ease-out}
   .hero-art img.on{opacity:1;transform:scale(1)}
   .hero-info{
