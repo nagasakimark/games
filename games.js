@@ -50,6 +50,17 @@ updated: 2026-11-01
 
 window.GAMES_TEXT = `
 
+name: わたしの はくぶつかん
+english: My Museum
+type: せかい
+about: はてしない 3Dの はくぶつかんを あるいて、どうぶつ、 げいじゅつ、 れきしなどを 見つけよう！
+summary: A 3D museum that grows as you explore: rooms on animals, art, history, science, the world and more, with simple English words on every exhibit.
+learn: どうぶつ、 げいじゅつ、 れきし、 世界の ことばと 英語
+link: https://nagasakimark.github.io/museum/
+image: images/museum.webp
+added: 2026-11-27
+updated: 2026-11-27
+
 name: フードゲッサー
 english: Food Guesser
 type: せかい
